@@ -1,0 +1,15 @@
+C:\Users\doros\Desktop\Rogal\Rogal\bin\Debug\net7.0\Rogal.exe
+C:\Users\doros\Desktop\Rogal\Rogal\bin\Debug\net7.0\Rogal.deps.json
+C:\Users\doros\Desktop\Rogal\Rogal\bin\Debug\net7.0\Rogal.runtimeconfig.json
+C:\Users\doros\Desktop\Rogal\Rogal\bin\Debug\net7.0\Rogal.dll
+C:\Users\doros\Desktop\Rogal\Rogal\bin\Debug\net7.0\Rogal.pdb
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.csproj.AssemblyReference.cache
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.AssemblyInfoInputs.cache
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.AssemblyInfo.cs
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.csproj.CoreCompileInputs.cache
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.dll
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\refint\Rogal.dll
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.pdb
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\Rogal.genruntimeconfig.cache
+C:\Users\doros\Desktop\Rogal\Rogal\obj\Debug\net7.0\ref\Rogal.dll
