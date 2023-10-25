@@ -4,8 +4,8 @@ namespace Rogal.Components
 {
     public class Wall : GameObject
     {
-        public Wall(Transform transform, Renderable renderable, ImmutableHealth health)
-            : base(transform, renderable, health)
+        public Wall(Transform transform, Renderable renderable)
+            : base(transform, renderable)
         {
         }
     }

@@ -4,7 +4,7 @@ using Rogal.Utils;
 
 namespace Rogal.Characters.Player
 {
-    public class Player : GameObject
+    public class Player : GameEntity
     {
         public int Score { get; private set; }
 

@@ -21,8 +21,7 @@ namespace Rogal.Utils
                     {
                         var wallTransform = new Transform(x, y, 0);
                         var wallRenderable = new Renderable('#');
-                        var wallHealth = new ImmutableHealth();
-                        Data[x, y] = new Wall(wallTransform, wallRenderable, wallHealth);
+                        Data[x, y] = new Wall(wallTransform, wallRenderable);
                     }
                     else
                     {
