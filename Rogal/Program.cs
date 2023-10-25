@@ -2,26 +2,13 @@
 {
     class Program
     {
-        private static Game game;
-        private static Timer timer;
-
-        static Program()
-        {
-            timer = new Timer(TimerCallback, null, 0, 100);
-            game = new Game(100, 25);
-        }
         static void Main(string[] args)
         {
-            while (true)
-            {
-                var key = Console.ReadKey(true).Key;
-                game.Update(key);
-            }
-        }
+            var game = new Game(100, 25);
+            var gameLoop = new GameLoop(game, 100);
+            gameLoop.Run();
 
-        static void TimerCallback(Object? o)
-        {
-            game.Draw();
+            Console.ReadKey();
         }
     }
 }

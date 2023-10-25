@@ -1,0 +1,65 @@
+## Ignore Visual Studio temporary files, user-specific files, and user-generated Windows image files.
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Ignore Rider IDE specific files
+.idea/
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## Folder config file
+Desktop.ini
+
+## Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+## VS Code directories
+.vscode/
+
+## Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+*.msu
+
+## Windows shortcuts
+*.lnk
+
+## JetBrains Rider
+.idea/
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## User-specific files
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+
+## Mono Auto Generated Files
+mono_crash.*
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+*.msu
+
+## Unwanted files
+bin/
+obj/
+
+!bin/**/YourBinaryName.exe
+!bin/**/YourBinaryName.dll
