@@ -1,5 +1,4 @@
-﻿using Rogal.Characters.Player;
-using Rogal.Utils;
+﻿using Rogal.Utils;
 
 namespace ConsoleApp
 {

@@ -12,5 +12,9 @@ namespace Rogal.Components
             Transform = transform;
             Renderable = renderable;
         }
+        public virtual void Update()
+        {
+            Transform.IncreaseFrameCounter();
+        }
     }
 }

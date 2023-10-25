@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using ConsoleApp;
 using Rogal.Components;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Rogal.Utils
 {
@@ -23,6 +24,7 @@ namespace Rogal.Utils
                     GameObject gameObject = game.Map.Data[x, y];
                     if (gameObject != null)
                     {
+                        gameObject.Update();
                         buffer.Append(gameObject.Renderable.Symbol);
                     }
                     else
@@ -34,8 +36,7 @@ namespace Rogal.Utils
             }
 
             buffer.Append($"Health: {game.Player.Health.Value} ");
-            buffer.AppendLine( $"Score: {game.Player.Score}");
-            buffer.Append("Punch: Press 'E'");
+            buffer.Append(" Punch: Press 'E'");
             Console.SetCursorPosition(0, 0);
             Console.Write(buffer.ToString());
         }

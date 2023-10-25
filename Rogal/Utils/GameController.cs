@@ -28,6 +28,9 @@ public class GameController
             case ConsoleKey.D:
                 if (game.Player.Transform.X < game.Map.Data.GetLength(0) - 1) newX = game.Player.Transform.X + 1;
                 break;
+            case ConsoleKey.E:
+                game.Player.Attack(game.Map);
+                break;
         }
 
         game.Player.Transform.IncreaseFrameCounter();
