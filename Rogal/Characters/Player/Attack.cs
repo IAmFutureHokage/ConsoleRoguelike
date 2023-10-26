@@ -8,21 +8,28 @@ namespace Rogal.Components
         private readonly IMap map;
         private int framesAlive;
 
-        public Attack(int startX, int startY, IMap map)
-            : base(new Transform(startX, startY, 1), DetermineRenderable(startX, startY))
+        public Attack(int startX, int startY, int prevX, int prevY, IMap map)
+        : base(new Transform(startX, startY, 20), DetermineRenderable(startX, startY, prevX, prevY))
         {
             this.map = map;
-            this.framesAlive = 0;
-
-            GameObject objAtAttackPos = map.GetGameObjectAt(Transform.X, Transform.Y);
-            if (!(objAtAttackPos is GameEntity))
-                map.AddGameObject(this);
+            framesAlive = 0;
+            map.AddGameObject(this);
         }
 
-        private static Renderable DetermineRenderable(int startX, int startY)
+
+        private static Renderable DetermineRenderable(int startX, int startY, int prevX, int prevY)
         {
-            return new Renderable('/');
+            if (startX > prevX || startX < prevX)
+            {
+                return new Renderable('/');
+            }
+            else if (startY > prevY || startY < prevY)
+            {
+                return new Renderable('\\');
+            }
+            return new Renderable('/'); // default symbol
         }
+
 
         public override void Update()
         {

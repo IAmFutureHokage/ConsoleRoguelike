@@ -38,7 +38,7 @@ public class Player : GameEntity
         GameObject objAtAttackPos = map.GetGameObjectAt(attackX, attackY);
         if (objAtAttackPos == null || objAtAttackPos is GameEntity)
         {
-            var attack = new Attack(attackX, attackY, map);
+            var attack = new Attack(attackX, attackY, Transform.PreviousX, Transform.PreviousY, map);
         }
     }
 }
