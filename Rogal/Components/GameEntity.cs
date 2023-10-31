@@ -6,7 +6,7 @@ namespace Rogal.Components
     {
         public int Health { get; protected set; }
 
-        public LivingEntity(Vector2 position, char symbol = '0', bool isPassable = false, int health = 100, int speed = 1)
+        public LivingEntity(Vector2 position, char symbol = 'Ж', bool isPassable = false, int health = 100, int speed = 1)
             : base(symbol, position, isPassable, speed)
         {
             Health = health;
