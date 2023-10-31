@@ -2,23 +2,25 @@
 
 namespace Rogal.Components
 {
-    public class GameEntity : GameObject
+    public class LivingEntity : GameObject
     {
-        public Health Health { get; protected set; }
+        public int Health { get; protected set; }
 
-        public GameEntity(Transform transform, Renderable renderable, Health health)
-            : base(transform, renderable)
+        public LivingEntity(Vector2 position, char symbol = '0', bool isPassable = false, int health = 100, int speed = 1)
+            : base(symbol, position, isPassable, speed)
         {
             Health = health;
         }
 
         public virtual void TakeDamage(int damageAmount)
         {
-            Health.TakeDamage(damageAmount);
-            if (Health.Value <= 0)
+            Health -= damageAmount;
+            if (Health <= 0)
             {
-                // Действия при смерти объекта, если это необходимо
+                Health = 0;
             }
         }
+
     }
 }
+

@@ -1,40 +1,35 @@
 ﻿using Rogal.Components.Base;
-using Rogal.Utils;
+using Rogal.EngineCore;
 
-namespace Rogal.Components
+public sealed class Attack : GameObject
 {
-    public class Attack : GameObject
+    private readonly IMap _map;
+    private int _updateCounter = 0;
+
+    public Attack(Vector2 startPosition, Vector2 previousPosition, IMap map)
+        : base(DetermineSymbol(startPosition, previousPosition), startPosition, false, 1)
     {
-        private readonly IMap map;
-        private int framesAlive;
-
-        public Attack(int startX, int startY, int prevX, int prevY, IMap map)
-        : base(new Transform(startX, startY, 20), DetermineRenderable(startX, startY, prevX, prevY))
+        if (startPosition.X == previousPosition.X && startPosition.Y == previousPosition.Y)
         {
-            this.map = map;
-            framesAlive = 0;
-            map.AddGameObject(this);
+            return;
         }
+        _map = map;
+        _map.AddGameObject(this);
+    }
 
+    private static char DetermineSymbol(Vector2 startPosition, Vector2 previousPosition)
+    {
+        return startPosition.X != previousPosition.X ? '/' :
+               startPosition.Y != previousPosition.Y ? '\\' : '/';
+    }
 
-        private static Renderable DetermineRenderable(int startX, int startY, int prevX, int prevY)
+    public override void Update()
+    {
+        _updateCounter++;
+
+        if (_updateCounter >= Speed)
         {
-            if (startX > prevX || startX < prevX)
-            {
-                return new Renderable('/');
-            }
-            else if (startY > prevY || startY < prevY)
-            {
-                return new Renderable('\\');
-            }
-            return new Renderable('/'); // default symbol
-        }
-
-
-        public override void Update()
-        {
-            base.Update();
-            map.RemoveGameObject(this);
+            _map.RemoveGameObject(this);
         }
     }
 }

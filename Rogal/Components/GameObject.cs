@@ -1,20 +1,33 @@
 ﻿using Rogal.Components.Base;
 
-namespace Rogal.Components
+public class GameObject
 {
-    public class GameObject
+    public char Symbol { get; set; }
+    public Vector2 Position
     {
-        public Transform Transform { get; private set; }
-        public Renderable Renderable { get; private set; }
+        get => _position;
+        set
+        {
+            PreviousPosition = _position;
+            _position = value;
+        }
+    }
+    private Vector2 _position;
 
-        public GameObject(Transform transform, Renderable renderable)
-        {
-            Transform = transform;
-            Renderable = renderable;
-        }
-        public virtual void Update()
-        {
-            Transform.IncreaseFrameCounter();
-        }
+    public Vector2 PreviousPosition { get; private set; }
+    public bool IsPassable { get; set; }
+    public int Speed { get; private set; }
+
+    public GameObject(char symbol, Vector2 position, bool isPassable, int speed)
+    {
+        Symbol = symbol;
+        _position = position;
+        IsPassable = isPassable;
+        Speed = speed;
+        PreviousPosition = new Vector2( _position.X -1, _position.Y);
+    }
+
+    public virtual void Update()
+    {
     }
 }

@@ -1,44 +1,51 @@
-﻿using Rogal.Components.Base;
-using Rogal.Components;
-using Rogal.Utils;
+﻿using Rogal.Components;
+using Rogal.Components.Base;
+using Rogal.EngineCore;
 
-public class Player : GameEntity
+public sealed class Player : LivingEntity
 {
-    private readonly IMap map;
+    private readonly IMap _map;
+    private int actionCounter;
 
-    public Player(int x, int y, char symbol, int initialHealth, int speed, IMap map)
-        : base(new Transform(x, y, speed), new Renderable(symbol), new Health(initialHealth))
+    public Player(IMap map, Vector2 startPosition, char symbol = 'o', int initialHealth = 100, int speed = 1)
+        : base(startPosition, symbol, false, initialHealth, speed)
     {
-        this.map = map;
-        map.MoveGameObject(this, x, y);
+        _map = map;
+        _map.MoveGameObject(this, startPosition);
+        actionCounter = 0;
     }
 
-    public void Attack(IMap map)
+    public override void Update()
     {
-        int attackX = Transform.X;
-        int attackY = Transform.Y;
+        base.Update();
+        if (actionCounter > 0) actionCounter--;
+    }
 
-        if (Transform.X > Transform.PreviousX)
-        {
-            attackX++;
-        }
-        else if (Transform.X < Transform.PreviousX)
-        {
-            attackX--;
-        }
-        else if (Transform.Y > Transform.PreviousY)
-        {
-            attackY++;
-        }
-        else if (Transform.Y < Transform.PreviousY)
-        {
-            attackY--;
-        }
+    public void Move(Vector2 direction)
+    {
+        if (actionCounter > 0) return;
 
-        GameObject objAtAttackPos = map.GetGameObjectAt(attackX, attackY);
-        if (objAtAttackPos == null || objAtAttackPos is GameEntity)
+        var newPosition = Position + direction;
+
+        if (_map.IsPositionFree(newPosition.X, newPosition.Y))
         {
-            var attack = new Attack(attackX, attackY, Transform.PreviousX, Transform.PreviousY, map);
+            _map.MoveGameObject(this, newPosition);
+            actionCounter = Speed;
+        }
+    }
+
+    public void Attack()
+    {
+        if (actionCounter > 0) return;
+
+        var attackDirection = Position - PreviousPosition;
+        var attackPosition = Position + attackDirection;
+
+        var objAtAttackPos = _map.GetTopGameObjectAt(attackPosition.X, attackPosition.Y);
+        if (objAtAttackPos == null || objAtAttackPos is LivingEntity)
+        {
+            new Attack(attackPosition, Position, _map);
+            actionCounter = Speed;
         }
     }
 }
