@@ -1,33 +1,36 @@
 ﻿using Rogal.Components.Base;
 
-public class GameObject
+namespace Rogal.Components
 {
-    public char Symbol { get; set; }
-    public Vector2 Position
+    public class GameObject
     {
-        get => _position;
-        set
+        public char Symbol { get; set; }
+        public Vector2 Position
         {
-            PreviousPosition = _position;
-            _position = value;
+            get => _position;
+            set
+            {
+                PreviousPosition = _position;
+                _position = value;
+            }
         }
-    }
-    private Vector2 _position;
+        private Vector2 _position;
 
-    public Vector2 PreviousPosition { get; private set; }
-    public bool IsPassable { get; set; }
-    public int Speed { get; private set; }
+        public Vector2 PreviousPosition { get; private set; }
+        public bool IsPassable { get; set; }
+        public int Speed { get; private set; }
 
-    public GameObject(char symbol, Vector2 position, bool isPassable, int speed)
-    {
-        Symbol = symbol;
-        _position = position;
-        IsPassable = isPassable;
-        Speed = speed;
-        PreviousPosition = new Vector2( _position.X -1, _position.Y);
-    }
+        public GameObject(char symbol, Vector2 position, bool isPassable, int speed)
+        {
+            Symbol = symbol;
+            _position = position;
+            IsPassable = isPassable;
+            Speed = speed;
+            PreviousPosition = new Vector2(_position.X, _position.Y);
+        }
 
-    public virtual void Update()
-    {
+        public virtual void Update()
+        {
+        }
     }
 }

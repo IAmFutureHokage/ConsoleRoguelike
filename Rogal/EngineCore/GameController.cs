@@ -1,71 +1,67 @@
 ﻿using ConsoleApp;
 using Rogal.Components.Base;
 
-public sealed class GameController
+namespace Rogal.EngineCore
 {
-    private readonly GameInit _gameInit;
-
-    public GameController(GameInit gameInit)
+    public sealed class GameController
     {
-        _gameInit = gameInit;
-    }
+        private readonly GameInit _gameInit;
 
-    private enum Direction
-    {
-        Up,
-        Left,
-        Down,
-        Right,
-        Attack,
-        None
-    }
-
-    private Direction GetDirectionFromKey(ConsoleKey key)
-    {
-        return key switch
+        public GameController(GameInit gameInit)
         {
-            ConsoleKey.W => Direction.Up,
-            ConsoleKey.A => Direction.Left,
-            ConsoleKey.S => Direction.Down,
-            ConsoleKey.D => Direction.Right,
-            ConsoleKey.E => Direction.Attack,
-            _ => Direction.None
-        };
-    }
-
-    public void HandleInput(ConsoleKey key)
-    {
-        var direction = GetDirectionFromKey(key);
-
-        if (direction == Direction.Attack)
-        {
-            _gameInit.Player.Attack();
-            return;
+            _gameInit = gameInit;
         }
 
-        var moveDirection = ConvertToVector2Direction(direction);
-        _gameInit.Player.Move(moveDirection);
-    }
-
-    private Vector2 ConvertToVector2Direction(Direction direction)
-    {
-        switch (direction)
+        private enum Actions
         {
-            case Direction.Up:
-                return new Vector2(0, -1);
-            case Direction.Left:
-                return new Vector2(-1, 0);
-            case Direction.Down:
-                return new Vector2(0, 1);
-            case Direction.Right:
-                return new Vector2(1, 0);
-            default:
-                return new Vector2(0, 0);
+            Up,
+            Left,
+            Down,
+            Right,
+            Attack,
+            None
+        }
+
+        private static Actions GetActionsFromKey(ConsoleKey key)
+        {
+            return key switch
+            {
+                ConsoleKey.W => Actions.Up,
+                ConsoleKey.A => Actions.Left,
+                ConsoleKey.S => Actions.Down,
+                ConsoleKey.D => Actions.Right,
+                ConsoleKey.E => Actions.Attack,
+                _ => Actions.None
+            };
+        }
+
+        public void HandleInput(ConsoleKey key)
+        {
+            var action = GetActionsFromKey(key);
+            var moveAction = ConvertToVector2Direction(action);
+            _gameInit.Player.Move(moveAction);
+        }
+
+        private Vector2 ConvertToVector2Direction(Actions action)
+        {
+            switch (action)
+            {
+                case Actions.Up:
+                    return new Vector2(0, -1);
+                case Actions.Left:
+                    return new Vector2(-1, 0);
+                case Actions.Down:
+                    return new Vector2(0, 1);
+                case Actions.Right:
+                    return new Vector2(1, 0);
+                case Actions.Attack:
+                    _gameInit.Player.Attack();
+                    return new Vector2(0, 0);
+                case Actions.None:
+                    return new Vector2(0, 0);
+                default:
+                    return new Vector2(0, 0);
+            }
         }
     }
 }
-
-
-
-
-

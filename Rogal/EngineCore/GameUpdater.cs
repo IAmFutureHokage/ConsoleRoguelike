@@ -2,7 +2,7 @@
 {
     public class GameUpdater
     {
-        private IMap _map;
+        private readonly IMap _map;
 
         public GameUpdater(IMap map)
         {

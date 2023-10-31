@@ -1,4 +1,5 @@
-﻿using Rogal.Components.Base;
+﻿using Rogal.Characters.Player;
+using Rogal.Components.Base;
 using Rogal.EngineCore;
 
 namespace ConsoleApp
@@ -11,21 +12,24 @@ namespace ConsoleApp
         public GameRenderer Renderer { get; private set; }
         public GameUpdater Updater { get; private set; }
        
-        private int _frameRate;
+        private readonly int _frameRate;
 
         public GameInit(int mapWidth = 100, int mapHeight = 30, int frameRate = 100)
         {
             _frameRate = frameRate;
+
             Map = new Map(mapWidth, mapHeight);
             Player = new Player(Map, new Vector2(1, 1));
+            Updater = new GameUpdater(Map);
+
+            //не ок
             Controller = new GameController(this);
             Renderer = new GameRenderer(this);
-            Updater = new GameUpdater(Map);
         }
 
         public void Run()
         {
-            var gameLoop = new GameLoop(this, _frameRate);
+            _ = new GameLoop(this, _frameRate);
         }
 
         public bool IsGameOver() => Player.Health <= 0;

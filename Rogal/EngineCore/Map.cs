@@ -1,6 +1,8 @@
-﻿using Rogal.Components;
+﻿using Rogal.Characters.Player;
+using Rogal.Components;
 using Rogal.Components.Base;
 
+//да в целом всё перелопатить под инструкцию в интерфейсе
 namespace Rogal.EngineCore
 {
     public sealed class Map : IMap
@@ -81,6 +83,7 @@ namespace Rogal.EngineCore
             gameObject.Position = newPosition;
             AddGameObject(gameObject);
 
+            //перенести в финиш апдейт
             var stackAtNewPosition = Data[newPosition.X, newPosition.Y];
             if (stackAtNewPosition.Any(obj => obj is Player) && stackAtNewPosition.Any(obj => obj is Finish))
             {

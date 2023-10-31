@@ -1,5 +1,6 @@
-﻿using Rogal.Components.Base;
-using System.Collections.Generic;
+﻿using Rogal.Components;
+using Rogal.Components.Base;
+//разбить на 3: фабрика, запись, чтение
 
 namespace Rogal.EngineCore
 {
