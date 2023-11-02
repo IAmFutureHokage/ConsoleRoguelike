@@ -29,7 +29,8 @@ namespace ConsoleApp
 
         public void Run()
         {
-            var gameLoop = new GameLoop(this);
+            //и это не ок
+            var gameLoop = new GameLoop(this, _frameRate);
             gameLoop.Run();
         }
 
