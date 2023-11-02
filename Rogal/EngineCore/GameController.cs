@@ -1,15 +1,16 @@
 ﻿using ConsoleApp;
+using Rogal.Characters.Player;
 using Rogal.Components.Base;
 
 namespace Rogal.EngineCore
 {
     public sealed class GameController
     {
-        private readonly GameInit _gameInit;
+        private readonly Player _player;
 
-        public GameController(GameInit gameInit)
+        public GameController(Player player)
         {
-            _gameInit = gameInit;
+            _player = player;
         }
 
         private enum Actions
@@ -39,7 +40,7 @@ namespace Rogal.EngineCore
         {
             var action = GetActionsFromKey(key);
             var moveAction = ConvertToVector2Direction(action);
-            _gameInit.Player.Move(moveAction);
+            _player.Move(moveAction);
         }
 
         private Vector2 ConvertToVector2Direction(Actions action)
@@ -55,7 +56,7 @@ namespace Rogal.EngineCore
                 case Actions.Right:
                     return new Vector2(1, 0);
                 case Actions.Attack:
-                    _gameInit.Player.Attack();
+                    _player.Attack();
                     return new Vector2(0, 0);
                 case Actions.None:
                     return new Vector2(0, 0);

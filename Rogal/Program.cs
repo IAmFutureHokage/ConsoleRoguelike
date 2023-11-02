@@ -1,4 +1,8 @@
-﻿namespace ConsoleApp
+﻿using Rogal.Characters.Player;
+using Rogal.Components.Base;
+using Rogal.EngineCore;
+
+namespace ConsoleApp
 {
     sealed class Program
     {
@@ -6,12 +10,20 @@
         {
             int mapWidth = 100;
             int mapHeight = 25;
-            int frameRate = 50;
+            int frameRate = 100;
 
-            var gameInit = new GameInit(mapWidth, mapHeight, frameRate);
-         
-            gameInit.Run();
-            //Пофиксить клик
+
+            var map = new Map(mapWidth, mapHeight);
+
+            //этому мапа не нужна на самом то деле
+            var player = new Player(map, new Vector2(1, 1));
+
+            var updater = new GameUpdater(map);
+            var controller = new GameController(player);
+            var renderer = new GameRenderer(player, map);
+            var gameLoop = new GameLoop(controller, renderer, updater, frameRate);
+
+            gameLoop.Run();
         }
     }
 }

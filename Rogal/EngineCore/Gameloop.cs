@@ -4,30 +4,34 @@ namespace Rogal.EngineCore
 {
     public sealed class GameLoop
     {
-        private readonly GameInit _gameInit;
         private readonly Timer _gameUpdateTimer;
         private readonly ManualResetEvent _gameEndEvent = new ManualResetEvent(false);
+        private readonly GameController _controller;
+        private readonly GameRenderer _renderer;
+        private readonly GameUpdater _updater;
 
-        public GameLoop(GameInit gameInit, int frameRate = 100)
+        public GameLoop(GameController controller, GameRenderer renderer, GameUpdater updater, int frameRate = 100)
         {
-            _gameInit = gameInit;
+            _controller = controller;
+            _renderer = renderer;
+            _updater = updater;
             _gameUpdateTimer = new Timer(GameUpdateCallback, null, 0, frameRate);
-            Task.Run(() => _gameInit.Updater.BeginKeyInputAsync());
+            Task.Run(() => _updater.BeginKeyInputAsync());
         }
 
         private void GameUpdateCallback(object? state)
         {
-            if (_gameInit.IsGameOver())
+            if (false) 
             {
                 _gameUpdateTimer.Dispose();
                 _gameEndEvent.Set();
-                _gameInit.Updater.isGameOver = true;
+                _updater.isGameOver = true;
                 return;
             }
-            _gameInit.Updater.UpdateAll();
-            var key = _gameInit.Updater.GetAndResetLastKey();
-            _gameInit.Controller.HandleInput(key);
-            _gameInit.Renderer.Draw();
+            _updater.UpdateAll();
+            var key = _updater.GetAndResetLastKey();
+            _controller.HandleInput(key);
+            _renderer.Draw();
         }
 
         public void Run()

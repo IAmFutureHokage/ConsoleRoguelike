@@ -1,4 +1,5 @@
 ﻿using ConsoleApp;
+using Rogal.Characters.Player;
 using Rogal.Components;
 using Rogal.Components.Base;
 using System.Text;
@@ -7,16 +8,16 @@ namespace Rogal.EngineCore
 {
     public sealed class GameRenderer
     {
-        private readonly GameInit _gameInit;
-        private readonly Vector2 _mapSize;
         private readonly char[] _buffer;
+        private readonly Player _player;
+        private readonly IMap _map;
 
-        public GameRenderer(GameInit gameInit)
+
+        public GameRenderer(Player player, IMap map)
         {
-            _gameInit = gameInit;
-            _mapSize.X = _gameInit.Map.GetWidth();
-            _mapSize.Y = _gameInit.Map.GetHeight();
-            _buffer = new char[_mapSize.X * _mapSize.Y + _mapSize.Y + 30];
+            _player = player;
+            _map = map;
+            _buffer = new char[map.GetWidth() * map.GetHeight() + map.GetHeight() + 30];
         }
 
         public void Draw()
@@ -30,11 +31,11 @@ namespace Rogal.EngineCore
         private void DrawMap()
         {
             int bufferIndex = 0;
-            for (int y = 0; y < _mapSize.Y; y++)
+            for (int y = 0; y < _map.GetHeight(); y++)
             {
-                for (int x = 0; x < _mapSize.X; x++)
+                for (int x = 0; x < _map.GetWidth(); x++)
                 {
-                    var gameObject = _gameInit.Map.GetTopGameObjectAt(x, y);
+                    var gameObject = _map.GetTopGameObjectAt(x, y);
                     if (gameObject == null)
                     {
                         _buffer[bufferIndex] = ' ';
@@ -52,13 +53,13 @@ namespace Rogal.EngineCore
         private void DrawInfoPanel()
         {
             var infoBuilder = new StringBuilder(30);
-            if (_gameInit.Player is LivingEntity playerEntity)
+            if (_player is LivingEntity playerEntity)
             {
                 infoBuilder.Append($"Health: {playerEntity.Health}  Punch: Press 'E'");
             }
 
             string info = infoBuilder.ToString();
-            int bufferIndex = _mapSize.X * _mapSize.Y + _mapSize.Y;
+            int bufferIndex = _map.GetWidth() * _map.GetHeight() + _map.GetHeight();
             for (int i = 0; i < info.Length && bufferIndex < _buffer.Length; i++)
             {
                 _buffer[bufferIndex] = info[i];
