@@ -29,7 +29,8 @@ namespace ConsoleApp
 
         public void Run()
         {
-            _ = new GameLoop(this, _frameRate);
+            var gameLoop = new GameLoop(this);
+            gameLoop.Run();
         }
 
         public bool IsGameOver() => Player.Health <= 0;
