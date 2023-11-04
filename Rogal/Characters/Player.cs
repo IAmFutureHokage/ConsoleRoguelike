@@ -1,46 +1,49 @@
-﻿using Rogal.Components.Base;
+﻿using Rogal.Components;
+using Rogal.Components.Base;
 using Rogal.EngineCore;
 
-namespace Rogal.Components
+namespace Rogal.Characters
 {
-    public class LivingEntity : GameObject
+    public sealed class Player : LivingEntity
     {
-        public int Health { get; protected set; }
-        protected int _actionCounter;
         private readonly IMap _map;
+        public event Action PlayerDied;
 
-        public LivingEntity(IMap map, Vector2 position, char symbol = 'Ж', bool isPassable = false, int health = 100, int speed = 1)
-            : base(symbol, position, isPassable, speed)
+        public Player(IMap map, Vector2 startPosition, char symbol = '♦', int initialHealth = 100, int speed = 1)
+            : base(map, startPosition, symbol, false, initialHealth, speed)
         {
-            Health = health;
             _map = map;
-            _actionCounter = 0;
+            _map.MoveGameObject(this, startPosition);
         }
 
         public override void Update()
         {
             base.Update();
-            if (_actionCounter > 0) _actionCounter--;
+            _map.Finished(this, Position);
         }
 
-        public virtual void Move(Vector2 direction)
+        public void Attack()
         {
             if (_actionCounter > 0) return;
 
-            var newPosition = Position + direction;
-            if (_map.IsPositionFree(newPosition.X, newPosition.Y))
+            var attackDirection = Position - PreviousPosition;
+            var attackPosition = Position + attackDirection;
+
+            var objAtAttackPos = _map.GetTopGameObjectAt(attackPosition.X, attackPosition.Y);
+            if (objAtAttackPos == null || objAtAttackPos is LivingEntity)
             {
-                _map.MoveGameObject(this, newPosition);
+                _ = new Attack(attackPosition, Position, _map);
+                _actionCounter = Speed;
             }
-            _actionCounter = Speed;
         }
 
-        public virtual void TakeDamage(int damageAmount, Vector2 attackerPosition)
+        public override void TakeDamage(int damageAmount, Vector2 attackerPosition)
         {
             Health -= damageAmount;
             if (Health <= 0)
             {
                 Health = 0;
+                PlayerDied?.Invoke();
                 _map.RemoveGameObject(this);
             }
             else
@@ -60,8 +63,5 @@ namespace Rogal.Components
                 Move(knockbackDirection);
             }
         }
-
     }
 }
-
-

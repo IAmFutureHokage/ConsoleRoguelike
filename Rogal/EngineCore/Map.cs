@@ -1,8 +1,7 @@
-﻿using Rogal.Characters.Player;
+﻿using Rogal.Characters;
 using Rogal.Components;
 using Rogal.Components.Base;
 
-//да в целом всё перелопатить под инструкцию в интерфейсе
 namespace Rogal.EngineCore
 {
     public sealed class Map : IMap
@@ -10,32 +9,59 @@ namespace Rogal.EngineCore
         public Stack<GameObject>[,] Data { get; private set; }
         private readonly Vector2 _size;
         private Vector2 _previousFinishPosition;
+        private Random _random = new Random();
 
         public Map(int width = 100, int height = 30)
         {
             _size = new Vector2(width, height);
             Data = new Stack<GameObject>[_size.X, _size.Y];
-            _previousFinishPosition = new Vector2(1, 1);    
+            _previousFinishPosition = new Vector2(1, 1);
             Initialize();
         }
 
         private void Initialize()
         {
+            var mazeGenerator = new MazeGenerator(_size.X, _size.Y);
             var finishPosition = DetermineFinishPosition(_previousFinishPosition);
-            _previousFinishPosition = finishPosition;
 
-            for (int y = 0; y < GetHeight(); y++)
+            Data = mazeGenerator.Generate(_previousFinishPosition, finishPosition);
+            Data[finishPosition.X, finishPosition.Y].Push(new Finish(finishPosition));
+            CreateNettles();
+            _previousFinishPosition = finishPosition;
+        }
+
+        private void CreateNettles()
+        {
+            List<Vector2> emptyCells = new List<Vector2>();
+
+            for (int x = 0; x < _size.X; x++)
             {
-                for (int x = 0; x < GetWidth(); x++)
+                for (int y = 0; y < _size.Y; y++)
                 {
-                    Data[x, y] = new Stack<GameObject>();
-                    if (x == 0 || y == 0 || x == GetWidth() - 1 || y == GetHeight() - 1)
+                    if (Data[x, y].Count == 0)
                     {
-                        Data[x, y].Push(new GameObject('#', new Vector2(x, y), false, 10));
+                        emptyCells.Add(new Vector2(x, y));
                     }
                 }
             }
-            Data[finishPosition.X, finishPosition.Y].Push(new Finish(finishPosition));
+
+            int nettlesToCreate = emptyCells.Count / 15;
+
+            for (int i = 0; i < nettlesToCreate; i++)
+            {
+                Vector2 position;
+                do
+                {
+                    position = emptyCells[_random.Next(emptyCells.Count)];
+                }
+                while (Distance(position, _previousFinishPosition) < 5);
+
+                _ = new LiveNettle(this, position);
+            }
+        }
+        private int Distance(Vector2 a, Vector2 b)
+        {
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
 
 
@@ -110,6 +136,8 @@ namespace Rogal.EngineCore
                 Data[playerPositionBeforeReset.X, playerPositionBeforeReset.Y].Push(player);
             }
         }
+
+
     }
 }
 

@@ -1,4 +1,4 @@
-﻿using Rogal.Characters.Player;
+﻿using Rogal.Characters;
 using Rogal.Components.Base;
 using Rogal.EngineCore;
 
@@ -18,7 +18,7 @@ namespace ConsoleApp
             var updater = new GameUpdater(map);
             var controller = new GameController(player);
             var renderer = new GameRenderer(player, map);
-            var gameLoop = new GameLoop(controller, renderer, updater, frameRate);
+            var gameLoop = new GameLoop(controller, renderer, updater, player, frameRate);
 
             gameLoop.Run();
         }

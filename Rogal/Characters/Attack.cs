@@ -2,17 +2,19 @@
 using Rogal.Components.Base;
 using Rogal.EngineCore;
 
-namespace Rogal.Characters.Player
+namespace Rogal.Characters
 {
     public sealed class Attack : GameObject
     {
         private readonly IMap _map;
 
         private int _updateCounter = 0;
+        private Vector2 _prevPosition;
 
         public Attack(Vector2 startPosition, Vector2 previousPosition, IMap map)
             : base(DetermineSymbol(startPosition, previousPosition), startPosition, false, 1)
         {
+            _prevPosition = previousPosition;
             if (startPosition.X == previousPosition.X && startPosition.Y == previousPosition.Y)
             {
                 return;
@@ -31,6 +33,17 @@ namespace Rogal.Characters.Player
         public override void Update()
         {
             _updateCounter++;
+
+            Stack<GameObject> stackAtPosition = _map.Data[Position.X, Position.Y];
+
+            foreach (var gameObject in stackAtPosition)
+            {
+                if (gameObject is LivingEntity livingEntity)
+                {
+                    livingEntity.TakeDamage(5, _prevPosition);
+                    break;
+                }
+            }
 
             if (_updateCounter >= Speed)
             {

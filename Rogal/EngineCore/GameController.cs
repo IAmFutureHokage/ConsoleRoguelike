@@ -1,5 +1,5 @@
 ﻿using ConsoleApp;
-using Rogal.Characters.Player;
+using Rogal.Characters;
 using Rogal.Components.Base;
 
 namespace Rogal.EngineCore

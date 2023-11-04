@@ -1,4 +1,4 @@
-﻿using Rogal.Characters.Player;
+﻿using Rogal.Characters;
 using Rogal.Components;
 using Rogal.Components.Base;
 
