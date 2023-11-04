@@ -14,10 +14,7 @@ namespace ConsoleApp
 
 
             var map = new Map(mapWidth, mapHeight);
-
-            //этому мапа не нужна на самом то деле
             var player = new Player(map, new Vector2(1, 1));
-
             var updater = new GameUpdater(map);
             var controller = new GameController(player);
             var renderer = new GameRenderer(player, map);

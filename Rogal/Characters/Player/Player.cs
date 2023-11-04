@@ -21,6 +21,7 @@ namespace Rogal.Characters.Player
         {
             base.Update();
             if (_actionCounter > 0) _actionCounter--;
+            _map.Finished(this, Position);
         }
 
         public void Move(Vector2 direction)
@@ -44,7 +45,6 @@ namespace Rogal.Characters.Player
             var objAtAttackPos = _map.GetTopGameObjectAt(attackPosition.X, attackPosition.Y);
             if (objAtAttackPos == null || objAtAttackPos is LivingEntity)
             {
-                //ну тут тоже не ок, через мапу создавать, а не передавать в атаку мапу
                 new Attack(attackPosition, Position, _map);
                 _actionCounter = Speed;
             }

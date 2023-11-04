@@ -1,6 +1,6 @@
-﻿using Rogal.Components;
+﻿using Rogal.Characters.Player;
+using Rogal.Components;
 using Rogal.Components.Base;
-//разбить на 3: фабрика, запись, чтение
 
 namespace Rogal.EngineCore
 {
@@ -14,5 +14,6 @@ namespace Rogal.EngineCore
         bool IsPositionFree(int x, int y);
         void MoveGameObject(GameObject gameObject, Vector2 newPosition);
         GameObject GetTopGameObjectAt(int x, int y);
+        void Finished(Player player, Vector2 position);
     }
 }

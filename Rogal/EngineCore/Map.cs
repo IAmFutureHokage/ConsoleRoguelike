@@ -82,15 +82,6 @@ namespace Rogal.EngineCore
             RemoveGameObject(gameObject);
             gameObject.Position = newPosition;
             AddGameObject(gameObject);
-
-            //перенести в финиш апдейт
-            var stackAtNewPosition = Data[newPosition.X, newPosition.Y];
-            if (stackAtNewPosition.Any(obj => obj is Player) && stackAtNewPosition.Any(obj => obj is Finish))
-            {
-                Vector2 playerPositionBeforeReset = _previousFinishPosition;
-                Initialize();
-                Data[playerPositionBeforeReset.X, playerPositionBeforeReset.Y].Push(gameObject);
-            }
         }
 
 
@@ -108,6 +99,17 @@ namespace Rogal.EngineCore
         public int GetWidth() => _size.X;
 
         public int GetHeight() => _size.Y;
+
+        public void Finished(Player player, Vector2 position)
+        {
+            var stackAtNewPosition = Data[position.X, position.Y];
+            if (stackAtNewPosition.Any(obj => obj is Player) && stackAtNewPosition.Any(obj => obj is Finish))
+            {
+                Vector2 playerPositionBeforeReset = _previousFinishPosition;
+                Initialize();
+                Data[playerPositionBeforeReset.X, playerPositionBeforeReset.Y].Push(player);
+            }
+        }
     }
 }
 

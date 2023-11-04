@@ -6,7 +6,6 @@ namespace Rogal.Characters.Player
 {
     public sealed class Attack : GameObject
     {
-        //не надо тут такого
         private readonly IMap _map;
 
         private int _updateCounter = 0;
@@ -20,7 +19,6 @@ namespace Rogal.Characters.Player
             }
             _map = map;
 
-            //ну не ок
             _map.AddGameObject(this);
         }
 
@@ -36,7 +34,6 @@ namespace Rogal.Characters.Player
 
             if (_updateCounter >= Speed)
             {
-                //тоже не фонтан
                 _map.RemoveGameObject(this);
             }
         }
