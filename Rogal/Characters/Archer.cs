@@ -52,7 +52,7 @@ namespace Rogal.Characters
                 {
                     if (gameObject is Player)
                     {
-                        new Bullet(Position, direction, _map);
+                        _ = new Bullet(Position, direction, _map);
                         return true;
                     }
                     break;

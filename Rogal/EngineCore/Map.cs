@@ -26,14 +26,13 @@ namespace Rogal.EngineCore
 
             Data = mazeGenerator.Generate(_previousFinishPosition, finishPosition);
             Data[finishPosition.X, finishPosition.Y].Push(new Finish(finishPosition));
-            //CreateNettles();
-            _ = new Archer(this, new Vector2(3, 3));
+            CreateEntities();
             _previousFinishPosition = finishPosition;
         }
 
-        private void CreateNettles()
+        private void CreateEntities()
         {
-            List<Vector2> emptyCells = new List<Vector2>();
+            List<Vector2> emptyCells = new();
 
             for (int x = 0; x < _size.X; x++)
             {
@@ -46,9 +45,11 @@ namespace Rogal.EngineCore
                 }
             }
 
-            int nettlesToCreate = emptyCells.Count / 15;
+            int entitiesToCreate = emptyCells.Count / 15;
+            int archersToCreate = entitiesToCreate / 4;
+            _ = entitiesToCreate - archersToCreate;
 
-            for (int i = 0; i < nettlesToCreate; i++)
+            for (int i = 0; i < entitiesToCreate; i++)
             {
                 Vector2 position;
                 do
@@ -57,9 +58,17 @@ namespace Rogal.EngineCore
                 }
                 while (Distance(position, _previousFinishPosition) < 5);
 
-                _ = new LiveNettle(this, position);
+                if (i < archersToCreate)
+                {
+                    _ = new Archer(this, position);
+                }
+                else
+                {
+                    _ = new LiveNettle(this, position);
+                }
             }
         }
+
         private static int Distance(Vector2 a, Vector2 b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
