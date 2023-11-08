@@ -12,7 +12,6 @@ namespace ConsoleApp
             int mapHeight = 25;
             int frameRate = 100;
 
-
             var map = new Map(mapWidth, mapHeight);
             var player = new Player(map, new Vector2(1, 1));
             var updater = new GameUpdater(map);

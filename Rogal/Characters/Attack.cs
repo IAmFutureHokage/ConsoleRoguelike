@@ -38,6 +38,11 @@ namespace Rogal.Characters
 
             foreach (var gameObject in stackAtPosition)
             {
+                if (gameObject is Bullet bullet) 
+                {
+                    _map.RemoveGameObject(bullet);
+                    break;
+                }
                 if (gameObject is LivingEntity livingEntity)
                 {
                     livingEntity.TakeDamage(5, _prevPosition);

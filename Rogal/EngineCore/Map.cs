@@ -26,7 +26,8 @@ namespace Rogal.EngineCore
 
             Data = mazeGenerator.Generate(_previousFinishPosition, finishPosition);
             Data[finishPosition.X, finishPosition.Y].Push(new Finish(finishPosition));
-            CreateNettles();
+            //CreateNettles();
+            _ = new Archer(this, new Vector2(3, 3));
             _previousFinishPosition = finishPosition;
         }
 
@@ -59,7 +60,7 @@ namespace Rogal.EngineCore
                 _ = new LiveNettle(this, position);
             }
         }
-        private int Distance(Vector2 a, Vector2 b)
+        private static int Distance(Vector2 a, Vector2 b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
         }
